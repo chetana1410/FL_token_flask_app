@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                font-family: Tahoma, sans-serif;
+                font-size: 11pt;
+            }
+
+            input[type="text"] {
+                margin-bottom: 12px;
+                margin-top: 3px;
+                width: 90%;
+                border: 1px solid #ccc;
+                height: 20px;
+                border-radius: 3px;
+            }
+
+            input[type="text"]:focus {
+                border: 1px solid #ddd;
+            }
+
+            input[type="submit"] {
+                width: 100px;
+                height: 35px;
+                background-color: #0077ff;
+                border: 1px solid #aaa;
+                color: white;
+                box-shadow: 0 2px 3px #bbb;
+                border-radius: 3px;
+            }
+
+            form {
+                width: 40%;
+                min-width: 500px;
+                margin: 10px auto;
+                background-color: rgb(248, 247, 247);
+                padding-left: 30px;
+                padding-top: 20px;
+                padding-bottom: 15px;
+                border: 1px solid #bab;
+            }
+
+            .invi {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="/submit" method="post">
+            <label for="address">Project Address:</label><br />
+            <input type="text" id="address" name="address" /><br />
+
+            Model:<br /><br />
+            <input
+                type="radio"
+                id="linear"
+                name="model"
+                value="Linear Regression"
+                onfocus="hideOptions(event)"
+            />
+            <label for="linear">Linear Regression</label><br />
+            <input
+                type="radio"
+                id="svm"
+                name="model"
+                value="SVM"
+                onfocus="showOptions(event)"
+            />
+            <label for="svm">SVM</label><br />
+            <input
+                type="radio"
+                id="rf"
+                name="model"
+                value="Random Forest"
+                onfocus="hideOptions(event)"
+            />
+            <label for="rf">Random Forest</label><br /><br />
+
+            <div id="options" class="invi">
+                Kernel:<br /><br />
+                <input type="radio" name="kernel" id="lin" value="linear" />
+                <label for="lin">Linear</label><br />
+                <input type="radio" id="poly" name="kernel" value="poly" />
+                <label for="poly">Polynomial</label><br />
+                <input type="radio" id="rbf" name="kernel" value="rbf" />
+                <label for="rbf">RBF</label><br /><br />
+            </div>
+
+            <label for="rounds">Number Of Rounds:</label><br />
+            <input type="text" id="rounds" name="rounds" /><br /><br />
+
+            <label for="tokens">Number Of Tokens:</label><br />
+            <input type="text" id="tokens" name="tokens" /><br />
+
+            <input type="submit" value="submit" />
+        </form>
+
+        <script>
+            const handleEvent = (bool) => {
+                if (bool) {
+                    document.querySelector("#options").className = "";
+                } else {
+                    document.querySelector("#options").className = "invi";
+                }
+            };
+
+            const showOptions = (e) => handleEvent(true);
+            const hideOptions = (e) => handleEvent(false);
+        </script>
+    </body>
+</html>
