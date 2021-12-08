@@ -16,5 +16,6 @@ def welcome():
 #         return user_inputs(request.form)
     
     
-    
+ if __name__ ==' __main__':
+    app.run()
     
