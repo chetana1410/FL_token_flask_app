@@ -17,34 +17,43 @@ def user_inputs(form):
     model_type = form["model"]
     rounds = int(form["rounds"])
     tokens = int(form["tokens"])
-    address = form["Address"]
+    address = form["address"]
     
-    def create_plan(project, builder):
-        # Add LINK to contract for testing
-        fund_with_link(address)
-
-        ## DEFINE MODEL ###
-        if model_type=='linear':
-            model = LinearRegression()
-        elif model_type=='svm': 
-            model = SVR(kernel=form(["kernel"]))
-        elif model_type=='random forest':
-            model = RandomForestRegressor()
-            
-        cid = upload_model(model)
-
-        ### PROVIDE REWARDS AND UPLOAD PLAN ###
-        FELToken[-1].increaseAllowance(address, 1000, {"from": builder})
-        requestId = project.createPlan(cid, rounds, tokens, {"from": builder})
-
-        # Simulate the VRF on local chain
-        if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
-            get_contract("vrf_coordinator").callBackWithRandomness(
-                requestId.return_value, 777, address, {"from": get_account()}
-            )
-
-
-def main():
+    
     project = ProjectContract[-1]
     builder = accounts.add(config["wallets"]["owner_key"])
-    create_plan(project, builder)
+
+    
+   
+    fund_with_link(address)
+
+    ## DEFINE MODEL ###
+    if model_type=='linear':
+        model = LinearRegression()
+    elif model_type=='svm': 
+        model = SVR(kernel=form(["kernel"]))
+    elif model_type=='random forest':
+        model = RandomForestRegressor()
+        
+    cid = upload_model(model)
+    
+    return cid
+   
+
+    # ### PROVIDE REWARDS AND UPLOAD PLAN ###
+    # FELToken[-1].increaseAllowance(address, 1000, {"from": builder})
+    # requestId = project.createPlan(cid, rounds, tokens, {"from": builder})
+
+    # # Simulate the VRF on local chain
+    # if network.show_active() in LOCAL_BLOCKCHAIN_ENVIRONMENTS:
+    #     get_contract("vrf_coordinator").callBackWithRandomness(
+    #         requestId.return_value, 777, address, {"from": get_account()}
+    #     )
+        
+
+
+        
+
+        
+
+
